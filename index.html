@@ -5,16 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GoldoraX - น้ำเต้าปูปลา</title>
 <style>
-body {margin:0;font-family:'Segoe UI',Roboto,sans-serif;background:#000;color:#FFD700;text-align:center;padding:20px;}
-.container {max-width:500px;margin:20px auto;background:#111;padding:20px;border-radius:16px;box-shadow:0 0 20px #FFD700;}
-input, button, select {padding:10px;margin:5px;border-radius:8px;border:none;font-size:16px;}
-button {cursor:pointer;font-weight:bold;}
-.btn-primary {background:#FFD700;color:#000;}
-.btn-secondary {background:#222;color:#fff;border:1px solid #FFD700;}
-.animal {background:linear-gradient(145deg,#ff0000,#ffffff);color:#000;border-radius:10px;padding:10px 12px;cursor:pointer;width:90px;display:inline-block;margin:5px;transition:0.3s;font-weight:bold;text-align:center;box-shadow:0 6px 15px rgba(0,0,0,0.3);animation:float 3s ease-in-out infinite;}
+/* พื้นหลังสีรุ้งเคลื่อนไหว */
+body {
+  margin:0; font-family:'Segoe UI', Roboto, sans-serif; color:#FFD700; text-align:center; padding:20px;
+  background: linear-gradient(270deg, red, orange, yellow, green, blue, indigo, violet);
+  background-size: 1400% 1400%;
+  animation: rainbow 15s ease infinite;
+}
+
+@keyframes rainbow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.container {max-width:500px; margin:20px auto; background:#111; padding:20px; border-radius:16px; box-shadow:0 0 20px #FFD700;}
+input, button, select {padding:10px; margin:5px; border-radius:8px; border:none; font-size:16px;}
+button {cursor:pointer; font-weight:bold;}
+.btn-primary {background:#FFD700; color:#000;}
+.btn-secondary {background:#222; color:#fff; border:1px solid #FFD700;}
+.animal {background:linear-gradient(145deg,#ff0000,#ffffff); color:#000; border-radius:10px; padding:10px 12px; cursor:pointer; width:90px; display:inline-block; margin:5px; transition:0.3s; font-weight:bold; text-align:center; box-shadow:0 6px 15px rgba(0,0,0,0.3); animation:float 3s ease-in-out infinite;}
 .animal:hover{background:linear-gradient(145deg,#ff9999,#ffffff);}
-.animal.selected{box-shadow:0 0 15px #FFD700;border:1px solid #FFD700;}
-#resultArea {margin-top:20px;background:#333;padding:10px;border-radius:10px;display:none;}
+.animal.selected{box-shadow:0 0 15px #FFD700; border:1px solid #FFD700;}
+#resultArea {margin-top:20px; background:#333; padding:10px; border-radius:10px; display:none;}
 .shake{animation:shake 0.5s;}
 @keyframes shake{0%{transform:translate(0,0);}20%{transform:translate(-4px,0);}40%{transform:translate(4px,0);}60%{transform:translate(-4px,0);}80%{transform:translate(4px,0);}100%{transform:translate(0,0);}}
 @keyframes float{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-8px) rotate(3deg);}}
@@ -60,89 +73,22 @@ button {cursor:pointer;font-weight:bold;}
 </div>
 
 <script>
+// --- ตัวแปรและฟังก์ชันเกมเหมือนเดิม ---
 const adminCode='Adminyai774570';
 let users=JSON.parse(localStorage.getItem('users')||'[]');
 let currentUser=null; let balance=0; let playerID='';
 const animalsList=[{key:'fish',label:'ปลา',emoji:'🐟'},{key:'crab',label:'ปู',emoji:'🦀'},{key:'tiger',label:'เสือ',emoji:'🐅'},{key:'gourd',label:'น้ำเต้า',emoji:'🍈'},{key:'chicken',label:'ไก่',emoji:'🐓'},{key:'shrimp',label:'กุ้ง',emoji:'🦐'}];
 const maxChoices=2; let selected=new Set();
-
 function saveUsers(){localStorage.setItem('users',JSON.stringify(users));}
-
-function login(){
- const u=document.getElementById('username').value.trim();
- const p=document.getElementById('password').value.trim();
- if(u===''||p===''){alert('กรอกข้อมูลให้ครบ');return;}
- if(u===adminCode){document.getElementById('loginForm').style.display='none'; document.getElementById('adminPanel').style.display='block'; showAdmin(); return;}
- let user=users.find(x=>x.username===u&&x.password===p);
- if(!user){alert('ชื่อผู้ใช้หรือรหัสไม่ถูกต้อง'); return;}
- currentUser=u; balance=user.balance||0; playerID=user.id||('id'+(users.indexOf(user)+1001)); user.id=playerID; saveUsers(); showGame();
-}
-
-function register(){
- const u=document.getElementById('username').value.trim();
- const p=document.getElementById('password').value.trim();
- if(u === '' || p === ''){alert('กรอกข้อมูลให้ครบ');return;}
- if(u === adminCode){alert('ไม่สามารถใช้รหัสนี้ได้');return;}
- if(users.find(x => x.username === u)){alert('มีผู้ใช้นี้แล้ว');return;}
- let newUser={username:u,password:p,balance:0,id:'id'+(users.length+1001)};
- users.push(newUser); saveUsers(); alert('สมัครเรียบร้อย! ระบบเข้าสู่เกมอัตโนมัติ'); currentUser=newUser.username; balance=newUser.balance; playerID=newUser.id; showGame();
-}
-
+function login(){const u=document.getElementById('username').value.trim();const p=document.getElementById('password').value.trim();if(u===''||p===''){alert('กรอกข้อมูลให้ครบ');return;}if(u===adminCode){document.getElementById('loginForm').style.display='none'; document.getElementById('adminPanel').style.display='block'; showAdmin(); return;} let user=users.find(x=>x.username===u&&x.password===p);if(!user){alert('ชื่อผู้ใช้หรือรหัสไม่ถูกต้อง'); return;} currentUser=u; balance=user.balance||0; playerID=user.id||('id'+(users.indexOf(user)+1001)); user.id=playerID; saveUsers(); showGame();}
+function register(){const u=document.getElementById('username').value.trim();const p=document.getElementById('password').value.trim();if(u === '' || p === ''){alert('กรอกข้อมูลให้ครบ');return;} if(u === adminCode){alert('ไม่สามารถใช้รหัสนี้ได้');return;} if(users.find(x => x.username === u)){alert('มีผู้ใช้นี้แล้ว');return;} let newUser={username:u,password:p,balance:0,id:'id'+(users.length+1001)}; users.push(newUser); saveUsers(); alert('สมัครเรียบร้อย! ระบบเข้าสู่เกมอัตโนมัติ'); currentUser=newUser.username; balance=newUser.balance; playerID=newUser.id; showGame();}
 function logout(){currentUser=null; balance=0; selected.clear(); document.getElementById('game').style.display='none'; document.getElementById('adminPanel').style.display='none'; document.getElementById('loginForm').style.display='block';}
-
-function showGame(){
- document.getElementById('loginForm').style.display='none'; document.getElementById('game').style.display='block';
- document.getElementById('playerBalance').textContent=balance;
- document.getElementById('playerID').textContent=playerID;
- createAnimals();
-}
-
-function createAnimals(){
- const animalsEl=document.getElementById('animals'); animalsEl.innerHTML='';
- animalsList.forEach(a=>{
-  const div=document.createElement('div'); div.className='animal'; div.innerHTML=`<div style='font-size:22px'>${a.emoji}</div><div>${a.label}</div>`;
-  div.addEventListener('click',()=>toggleSelect(a.key,div));
-  animalsEl.appendChild(div);
- });
-}
-
-function toggleSelect(key,el){
- if(selected.has(key)){selected.delete(key); el.classList.remove('selected');}
- else{if(selected.size>=maxChoices){alert('เลือกได้สูงสุด '+maxChoices+' ตัว'); return;} selected.add(key); el.classList.add('selected');}
-}
-
-document.getElementById('spinBtn').addEventListener('click',()=>{
- if(selected.size===0){alert('เลือกสัตว์ก่อนเดิมพัน'); return;}
- const betPerChoice=parseInt(document.getElementById('betAmount').value)||50;
- const totalBet=betPerChoice*selected.size;
- if(balance<totalBet){alert('ยอดเงินไม่พอ'); return;}
- balance-=totalBet; document.getElementById('playerBalance').textContent=balance;
- document.querySelectorAll('.animal').forEach(a=>{a.classList.add('shake'); setTimeout(()=>a.classList.remove('shake'),500);});
- const dice=[]; for(let i=0;i<3;i++){ dice.push(animalsList[Math.floor(Math.random()*animalsList.length)].key);}
- const counts={}; dice.forEach(d=>counts[d]=(counts[d]||0)+1);
- let totalWin=0; let breakdown=[];
- selected.forEach(k=>{ const occ=counts[k]||0; const payout=betPerChoice*occ; totalWin+=payout; breakdown.push(`${animalsList.find(a=>a.key===k).label} ${occ} ลูก (ได้ ${payout} ฿)`);});
- const net=totalWin-totalBet; balance+=totalWin; document.getElementById('playerBalance').textContent=balance;
- document.getElementById('diceResult').innerHTML=dice.map(d=>animalsList.find(a=>a.key===d).emoji).join(' ');
- document.getElementById('summary').innerHTML=breakdown.join(' — ');
- document.getElementById('payout').innerHTML=`รวมชนะ ${totalWin} ฿ — กำไร ${net>=0?'+':''}${net} ฿`;
- document.getElementById('resultArea').style.display='block'; selected.clear(); createAnimals();
- // บันทึกยอดเงินผู้เล่นอัตโนมัติ
- let user = users.find(x=>x.username===currentUser); if(user){user.balance=balance; saveUsers();}
-});
-
-function showAdmin(){
- const sel=document.getElementById('playerSelect'); const list=document.getElementById('playersList'); sel.innerHTML=''; list.innerHTML='';
- users.forEach(u=>{ const opt=document.createElement('option'); opt.value=u.username; opt.textContent=`${u.id} (${u.username}) - ${u.balance} ฿`; sel.appendChild(opt); const div=document.createElement('div'); div.textContent=`${u.id} (${u.username}) - ${u.balance} ฿`; list.appendChild(div); });
-}
-
-function updatePlayerBalance(){
- const uname=document.getElementById('playerSelect').value;
- const amt=parseInt(document.getElementById('adminAmount').value)||0;
- let u=users.find(x=>x.username===uname); if(!u){alert('ผู้เล่นไม่พบ'); return;}
- u.balance+=amt; if(u.balance<0) u.balance=0; saveUsers(); showAdmin(); if(currentUser===uname){balance=u.balance; document.getElementById('playerBalance').textContent=balance;}
-}
-
+function showGame(){document.getElementById('loginForm').style.display='none'; document.getElementById('game').style.display='block';document.getElementById('playerBalance').textContent=balance;document.getElementById('playerID').textContent=playerID; createAnimals();}
+function createAnimals(){const animalsEl=document.getElementById('animals'); animalsEl.innerHTML=''; animalsList.forEach(a=>{const div=document.createElement('div'); div.className='animal'; div.innerHTML=`<div style='font-size:22px'>${a.emoji}</div><div>${a.label}</div>`; div.addEventListener('click',()=>toggleSelect(a.key,div)); animalsEl.appendChild(div);});}
+function toggleSelect(key,el){if(selected.has(key)){selected.delete(key); el.classList.remove('selected');} else{if(selected.size>=maxChoices){alert('เลือกได้สูงสุด '+maxChoices+' ตัว'); return;} selected.add(key); el.classList.add('selected');}}
+document.getElementById('spinBtn').addEventListener('click',()=>{if(selected.size===0){alert('เลือกสัตว์ก่อนเดิมพัน'); return;} const betPerChoice=parseInt(document.getElementById('betAmount').value)||50; const totalBet=betPerChoice*selected.size;if(balance<totalBet){alert('ยอดเงินไม่พอ'); return;} balance-=totalBet; document.getElementById('playerBalance').textContent=balance; document.querySelectorAll('.animal').forEach(a=>{a.classList.add('shake'); setTimeout(()=>a.classList.remove('shake'),500);}); const dice=[]; for(let i=0;i<3;i++){ dice.push(animalsList[Math.floor(Math.random()*animalsList.length)].key);} const counts={}; dice.forEach(d=>counts[d]=(counts[d]||0)+1); let totalWin=0; let breakdown=[]; selected.forEach(k=>{ const occ=counts[k]||0; const payout=betPerChoice*occ; totalWin+=payout; breakdown.push(`${animalsList.find(a=>a.key===k).label} ${occ} ลูก (ได้ ${payout} ฿)`);}); const net=totalWin-totalBet; balance+=totalWin; document.getElementById('playerBalance').textContent=balance; document.getElementById('diceResult').innerHTML=dice.map(d=>animalsList.find(a=>a.key===d).emoji).join(' '); document.getElementById('summary').innerHTML=breakdown.join(' — '); document.getElementById('payout').innerHTML=`รวมชนะ ${totalWin} ฿ — กำไร ${net>=0?'+':''}${net} ฿`; document.getElementById('resultArea').style.display='block'; selected.clear(); createAnimals();});
+function showAdmin(){const sel=document.getElementById('playerSelect'); const list=document.getElementById('playersList'); sel.innerHTML=''; list.innerHTML=''; users.forEach(u=>{const opt=document.createElement('option'); opt.value=u.username; opt.textContent=`${u.id} (${u.username}) - ${u.balance} ฿`; sel.appendChild(opt); const div=document.createElement('div'); div.textContent=`${u.id} (${u.username}) - ${u.balance} ฿`; list.appendChild(div);});}
+function updatePlayerBalance(){const uname=document.getElementById('playerSelect').value; const amt=parseInt(document.getElementById('adminAmount').value)||0; let u=users.find(x=>x.username===uname); if(!u){alert('ผู้เล่นไม่พบ'); return;} u.balance+=amt; if(u.balance<0) u.balance=0; saveUsers(); showAdmin(); if(currentUser===uname){balance=u.balance; document.getElementById('playerBalance').textContent=balance;}}
 </script>
 
 </body>
