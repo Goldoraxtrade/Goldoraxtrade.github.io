@@ -1,18 +1,30 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<title>GoldoraX - สมัครสมาชิก</title>
-<link rel="stylesheet" href="style.css">
-<script src="main.js" defer></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Gxtrade — สมัครสมาชิก</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1>สมัครสมาชิก</h1>
-<form id="register-form">
-  <label>Username: <input type="text" id="register-username"></label><br>
-  <label>Password: <input type="password" id="register-password"></label><br>
-  <button type="submit">สมัครสมาชิก</button>
-</form>
-<p>มีบัญชีแล้ว? <a href="login.html">เข้าสู่ระบบ</a></p>
+  <header class="topbar">
+    <div class="logo"><span class="gold">Gx</span>trade</div>
+    <nav><a href="index.html">เข้าสู่ระบบ</a> · <a href="register.html">สมัครสมาชิก</a></nav>
+  </header>
+
+  <main class="card center">
+    <h1>สมัครสมาชิก</h1>
+    <label>ชื่อผู้ใช้ (username):</label>
+    <input id="reg-username" placeholder="พิมพ์ Username" />
+    <label>รหัสผ่าน:</label>
+    <input id="reg-password" type="password" placeholder="พิมพ์ Password" />
+    <button id="regBtn">สมัครสมาชิก</button>
+    <p class="muted"><a href="index.html">กลับไปหน้าเข้าสู่ระบบ</a></p>
+  </main>
+
+  <script src="main.js"></script>
+  <script>
+    document.getElementById('regBtn').addEventListener('click', registerUser);
+  </script>
 </body>
 </html>

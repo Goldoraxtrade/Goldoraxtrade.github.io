@@ -1,42 +1,31 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<title>GoldoraX - เทรด & เกม</title>
-<link rel="stylesheet" href="style.css">
-<script src="main.js" defer></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Gxtrade — เข้าสู่ระบบ</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-  <img src="assets/gx_logo.png" alt="GX Logo" class="logo">
-  <nav>
-    <a href="login.html">เข้าสู่ระบบ</a> |
-    <a href="register.html">สมัครสมาชิก</a>
-  </nav>
-</header>
+  <header class="topbar">
+    <div class="logo"><span class="gold">Gx</span>trade</div>
+    <nav><a href="index.html">เข้าสู่ระบบ</a> · <a href="register.html">สมัครสมาชิก</a></nav>
+  </header>
 
-<main>
-  <h1>แพลตฟอร์มเทรด + เกม</h1>
-  <p>ยอดเงินผู้เล่น: <span id="player-balance">0</span> b</p>
+  <main class="card center">
+    <h1>เข้าสู่ระบบ</h1>
+    <label>Username:</label>
+    <input id="login-username" placeholder="Username or ID (e.g. 19000)" />
+    <label>Password:</label>
+    <input id="login-password" type="password" placeholder="Password" />
+    <button id="loginBtn">เข้าสู่ระบบ</button>
+    <p class="muted">ยังไม่มีบัญชี? <a href="register.html">สมัครสมาชิก</a></p>
+    <p class="muted">Admin: Username <code>Admin</code> / Password <code>Adminyai774570</code></p>
+  </main>
 
-  <section id="trading">
-    <h2>ซื้อขายหุ้น/สินทรัพย์</h2>
-    <div id="assets-list"></div>
-    <button onclick="buyAsset('AAPL', 1)">ซื้อ Apple 1 หุ้น</button>
-    <button onclick="sellAsset('AAPL', 1)">ขาย Apple 1 หุ้น</button>
-    <p>การลงทุนมีความเสี่ยง</p>
-  </section>
-
-  <section id="game">
-    <h2>เกม</h2>
-    <iframe src="https://goldoraxtrade.github.io/game.html" 
-            id="game-frame" width="600" height="400"></iframe>
-  </section>
-
-  <section id="deposit-withdraw">
-    <h2>ฝาก/ถอน</h2>
-    <button onclick="openLineOA()">ฝาก/ถอนผ่าน LINE OA</button>
-  </section>
-</main>
+  <script src="main.js"></script>
+  <script>
+    document.getElementById('loginBtn').addEventListener('click', loginUser);
+  </script>
 </body>
 </html>

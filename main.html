@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Gxtrade — แพลตฟอร์ม</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo"><span class="gold">Gx</span>trade</div>
+    <nav><span id="nav-user"></span> · <a href="index.html" id="logoutLink">ออกจากระบบ</a></nav>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar card">
+      <h2>แพลตฟอร์มเทรด + เกม</h2>
+      <p>ยอดเงินผู้เล่น: <strong id="display-balance">0 b</strong></p>
+
+      <section>
+        <h3>ซื้อขายหุ้น/สินทรัพย์</h3>
+        <div class="asset" data-symbol="AAPL">Apple (AAPL)</div>
+        <div class="asset-controls">
+          <button onclick="trade('AAPL','buy')">ซื้อ 1 หุ้น</button>
+          <button onclick="trade('AAPL','sell')">ขาย 1 หุ้น</button>
+        </div>
+
+        <div class="asset" data-symbol="TSLA">Tesla (TSLA)</div>
+        <div class="asset-controls">
+          <button onclick="trade('TSLA','buy')">ซื้อ 1 หุ้น</button>
+          <button onclick="trade('TSLA','sell')">ขาย 1 หุ้น</button>
+        </div>
+
+        <div class="asset" data-symbol="AMZN">Amazon (AMZN)</div>
+        <div class="asset-controls">
+          <button onclick="trade('AMZN','buy')">ซื้อ 1 หุ้น</button>
+          <button onclick="trade('AMZN','sell')">ขาย 1 หุ้น</button>
+        </div>
+
+        <div class="asset" data-symbol="GOLD">Gold</div>
+        <div class="asset-controls">
+          <button onclick="trade('GOLD','buy')">ซื้อ 1 หน่วย</button>
+          <button onclick="trade('GOLD','sell')">ขาย 1 หน่วย</button>
+        </div>
+
+        <p class="small muted">การลงทุนมีความเสี่ยง</p>
+      </section>
+
+      <section>
+        <h3>เกม</h3>
+        <button onclick="openGame()">เกมน้ำเต้า</button>
+      </section>
+
+      <section>
+        <h3>ฝาก/ถอน</h3>
+        <button onclick="openLine()">ฝาก/ถอนผ่าน LINE OA</button>
+      </section>
+    </aside>
+
+    <main class="content card">
+      <h2>รายละเอียดบัญชี</h2>
+      <p>ID: <span id="user-id"></span></p>
+      <p>Username: <span id="user-name"></span></p>
+      <p>Balance (ฝาก/ถอน โดยแอดมิน): <span id="balance-only">0</span> b</p>
+      <p>Profit/Loss (จากเกม/เทรด): <span id="pl-only">0</span> b</p>
+      <h3>ยอดเงินรวม: <span id="total-balance">0</span> b</h3>
+
+      <hr />
+      <div id="game-area" style="display:none;">
+        <h3>เกมน้ำเต้า</h3>
+        <label>เดิมพัน (b):</label>
+        <input id="bet-amount" type="number" value="100" min="1" />
+        <button onclick="playDice()">เล่นน้ำเต้า</button>
+        <div id="game-result"></div>
+      </div>
+    </main>
+  </div>
+
+  <script src="main.js"></script>
+  <script>
+    // initialize page
+    window.addEventListener('DOMContentLoaded', function(){
+      if(!isLoggedIn()) { window.location.href = 'index.html'; return; }
+      const u = getCurrentUser();
+      if(u === 'Admin') { window.location.href = 'admin.html'; return; }
+      document.getElementById('nav-user').innerText = u;
+      loadUserDataToPage();
+    });
+
+    document.getElementById('logoutLink').addEventListener('click', function(){ logout(); });
+  </script>
+</body>
+</html>
