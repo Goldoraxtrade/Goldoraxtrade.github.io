@@ -2,38 +2,17 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GoldoraX Login</title>
+<title>Login - GoldoraX</title>
 <link rel="stylesheet" href="style.css">
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-<script src="firebase-config.js"></script>
 </head>
 <body>
-<h1>GoldoraX น้ำเต้าปูปลา 🎲</h1>
-<div class="container">
-<h2>เข้าสู่ระบบ</h2>
-<input type="text" id="loginName" placeholder="ชื่อผู้เล่นหรือ Admin"><br>
-<input type="password" id="loginPass" placeholder="รหัสผ่าน"><br>
-<button onclick="login()">เข้าสู่ระบบ</button>
+<h1>เข้าสู่ระบบผู้เล่น</h1>
+<form id="loginForm">
+<input type="text" id="username" placeholder="ชื่อผู้เล่น" required>
+<input type="password" id="password" placeholder="รหัสผ่าน" required>
+<button type="submit">เข้าสู่ระบบ</button>
 <p>ยังไม่มีบัญชี? <a href="register.html">สมัครสมาชิก</a></p>
-</div>
-
-<script>
-function login(){
-  let name=document.getElementById('loginName').value.trim();
-  let pass=document.getElementById('loginPass').value.trim();
-  if(name==="Admin" && pass==="Adminyai774570"){ window.location="admin.html"; return; }
-  firebase.database().ref('players').orderByChild('name').equalTo(name).once('value',snap=>{
-    if(snap.exists()){
-      let player=Object.values(snap.val())[0];
-      localStorage.setItem("currentPlayerID",player.id);
-      window.location="game.html";
-    }else{
-      alert("ไม่มีผู้เล่นนี้");
-    }
-  });
-}
-</script>
+</form>
+<script src="main.js"></script>
 </body>
 </html>

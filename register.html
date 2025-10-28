@@ -2,32 +2,17 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GoldoraX Register</title>
+<title>Register - GoldoraX</title>
 <link rel="stylesheet" href="style.css">
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-<script src="firebase-config.js"></script>
 </head>
 <body>
-<h1>สมัครสมาชิก GoldoraX</h1>
-<div class="container">
-<input type="text" id="regName" placeholder="ชื่อผู้เล่น"><br>
-<button onclick="register()">สมัครสมาชิก</button>
-<p><a href="login.html">กลับไปล็อกอิน</a></p>
-</div>
-
-<script>
-function register(){
-  let name=document.getElementById('regName').value.trim();
-  if(!name){ alert("กรอกชื่อผู้เล่น"); return; }
-  const id=Date.now();
-  const player={id:id,name:name,balance:0};
-  firebase.database().ref('players/'+id).set(player).then(()=>{
-    alert("สมัครสำเร็จ ID: "+id);
-    window.location="login.html";
-  });
-}
-</script>
+<h1>สมัครสมาชิก</h1>
+<form id="registerForm">
+<input type="text" id="newUsername" placeholder="ชื่อผู้เล่น" required>
+<input type="password" id="newPassword" placeholder="รหัสผ่าน" required>
+<button type="submit">สมัครสมาชิก</button>
+<p>มีบัญชีแล้ว? <a href="login.html">เข้าสู่ระบบ</a></p>
+</form>
+<script src="main.js"></script>
 </body>
 </html>

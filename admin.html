@@ -2,34 +2,19 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GoldoraX Admin</title>
+<title>Admin - GoldoraX</title>
 <link rel="stylesheet" href="style.css">
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-<script src="firebase-config.js"></script>
 </head>
 <body>
-<h1>Admin Panel - GoldoraX</h1>
-<div class="container">
-<table border="1" width="100%" id="playersTable">
-<tr><th>ID</th><th>ชื่อผู้เล่น</th><th>ยอดเงิน</th></tr>
-</table>
-<button onclick="window.location='login.html'">ออกจากระบบ</button>
+<h1>หน้าสำหรับแอดมิน</h1>
+<form id="adminLoginForm">
+<input type="password" id="adminPassword" placeholder="รหัสแอดมิน" required>
+<button type="submit">เข้าสู่ระบบ</button>
+</form>
+<div id="adminPanel" style="display:none;">
+<h2>รายชื่อผู้เล่น</h2>
+<ul id="playerList"></ul>
 </div>
-
-<script>
-firebase.database().ref('players').on('value',snap=>{
-  let table=document.getElementById('playersTable');
-  table.innerHTML="<tr><th>ID</th><th>ชื่อผู้เล่น</th><th>ยอดเงิน</th></tr>";
-  snap.forEach(child=>{
-    let p=child.val();
-    let row=table.insertRow();
-    row.insertCell(0).innerText=p.id;
-    row.insertCell(1).innerText=p.name;
-    row.insertCell(2).innerText=p.balance;
-  });
-});
-</script>
+<script src="main.js"></script>
 </body>
 </html>
