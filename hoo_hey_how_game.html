@@ -8,8 +8,8 @@
 body {font-family: 'Prompt', sans-serif; margin:0; padding:0; background: linear-gradient(135deg,#1a2a6c,#b21f1f,#fdbb2d); background-size: 400% 400%; animation: gradientBG 15s ease infinite; color:#fff; text-align:center;}
 @keyframes gradientBG {0%{background-position:0% 50%;} 50%{background-position:100% 50%;} 100%{background-position:0% 50%;}}
 header {padding:20px; background:#222; box-shadow:0 2px 10px rgba(0,0,0,0.5);}
-.deposit-btn, .play-btn {display:inline-block; margin:10px; padding:12px 20px; background:gold; color:black; border-radius:12px; font-weight:bold; text-decoration:none; transition:0.2s;}
-.deposit-btn:hover, .play-btn:hover {background:#ffe066; transform:translateY(-3px);}
+.deposit-btn {display:inline-block; margin:10px; padding:12px 20px; background:gold; color:black; border-radius:12px; font-weight:bold; text-decoration:none; transition:0.2s;}
+.deposit-btn:hover {background:#ffe066; transform:translateY(-3px);}
 h1 {color:gold; text-shadow:2px 2px 10px rgba(255,215,0,0.8);}
 #balance {background: rgba(255,255,255,0.2); display: inline-block; padding: 10px 20px; border-radius: 15px; box-shadow:0 4px 10px rgba(0,0,0,0.3); font-size: 18px; margin: 15px 0;}
 .animals {display:flex; flex-wrap:wrap; justify-content:center; gap:15px; margin-bottom:20px;}
@@ -36,6 +36,7 @@ button#roll:active {transform: translateY(2px) scale(0.95); box-shadow:0 0 20px 
   <a href="https://lin.ee/Mm1caQx" target="_blank" class="deposit-btn">💰 ฝาก / ถอนผ่าน LINE OA</a>
 </header>
 <h1>🎲 เกมน้ำเต้าปูปลา 🎲</h1>
+<div id="playerInfo">ผู้เล่น: <span id="playerNameDisplay"></span></div>
 <div id="balance">💰 ยอดเงินผู้เล่น: <span id="playerBalance">0</span> บาท</div><br>
 <p>เลือกสัตว์ได้สูงสุด 3 ตัว แล้วกดหมุน!</p>
 <div class="animals">
@@ -52,6 +53,9 @@ button#roll:active {transform: translateY(2px) scale(0.95); box-shadow:0 0 20px 
 <audio id="rollSound" src="https://www.soundjay.com/misc/sounds/dice-roll-1.mp3"></audio>
 <audio id="winSound" src="https://www.soundjay.com/button/sounds/button-3.mp3"></audio>
 <script>
+const playerName = localStorage.getItem('playerName');
+if(!playerName){alert('กรุณาล็อกอินก่อนเล่นเกม'); window.location.href='login.html';}
+document.getElementById('playerNameDisplay').textContent = playerName;
 const animals=['น้ำเต้า','ปู','ปลา','เสือ','ไก่','กุ้ง'];
 const emojis=['🍐','🦀','🐟','🐯','🐔','🦐'];
 const selected=new Set();
