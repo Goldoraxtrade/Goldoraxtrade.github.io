@@ -1,31 +1,37 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Gxtrade — เข้าสู่ระบบ</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gxtrade</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="topbar">
-    <div class="logo"><span class="gold">Gx</span>trade</div>
-    <nav><a href="index.html">เข้าสู่ระบบ</a> · <a href="register.html">สมัครสมาชิก</a></nav>
-  </header>
+<header>
+<h1>Gxtrade</h1>
+<div>19002 · <a href="logout.html">ออกจากระบบ</a></div>
+<div>แพลตฟอร์มเทรด + เกม</div>
+<div>ยอดเงินผู้เล่น: <span id="playerBalance">14970</span> b</div>
+</header>
 
-  <main class="card center">
-    <h1>เข้าสู่ระบบ</h1>
-    <label>Username:</label>
-    <input id="login-username" placeholder="Username or ID (e.g. 19000)" />
-    <label>Password:</label>
-    <input id="login-password" type="password" placeholder="Password" />
-    <button id="loginBtn">เข้าสู่ระบบ</button>
-    <p class="muted">ยังไม่มีบัญชี? <a href="register.html">สมัครสมาชิก</a></p>
-    <p class="muted">Admin: Username <code>Admin</code> / Password <code>Adminyai774570</code></p>
-  </main>
+<section>
+<h2>ซื้อขายหุ้น/สินทรัพย์</h2>
+<div>Apple (AAPL) <button>ซื้อ 1 หุ้น</button> <button>ขาย 1 หุ้น</button></div>
+<div>Tesla (TSLA) <button>ซื้อ 1 หุ้น</button> <button>ขาย 1 หุ้น</button></div>
+<div>Amazon (AMZN) <button>ซื้อ 1 หุ้น</button> <button>ขาย 1 หุ้น</button></div>
+<div>Gold <button>ซื้อ 1 หน่วย</button> <button>ขาย 1 หน่วย</button></div>
+<p>การลงทุนมีความเสี่ยง</p>
+</section>
 
-  <script src="main.js"></script>
-  <script>
-    document.getElementById('loginBtn').addEventListener('click', loginUser);
-  </script>
+<section>
+<h2>เกม</h2>
+<!-- ปุ่มลิงก์เกมน้ำเต้าปูปลา -->
+<a href="hoo_hey_how_game.html" class="play-btn" style="background:linear-gradient(145deg,#FFD700,#FFA500); color:black; padding:12px 25px; border-radius:12px; text-decoration:none; font-weight:bold; box-shadow:0 6px 15px rgba(0,0,0,0.5); transition:0.2s;">🎲 เล่นน้ำเต้าปูปลา</a>
+</section>
+
+<section>
+<h2>ฝาก/ถอน</h2>
+<a href="https://lin.ee/Mm1caQx" target="_blank">ฝาก/ถอนผ่าน LINE OA</a>
+</section>
 </body>
 </html>
