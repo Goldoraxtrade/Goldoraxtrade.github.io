@@ -1,119 +1,33 @@
-
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GoldoraX เกมน้ำเต้าปูปลา</title>
-<link rel="stylesheet" href="style.css">
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-<script src="firebase-config.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>เกมน้ำเต้าปูปลา - GoldoraX</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1>GoldoraX น้ำเต้าปูปลา 🎲</h1>
-
-<div class="container">
-<div class="players">
-ผู้เล่น: <span id="playerName">-</span> | ID: <span id="playerID">-</span> | ยอดเงิน: <span id="playerBalance">0</span> b
-<button onclick="logout()">ออกจากระบบ</button>
-</div>
-
-<div class="bet-section">
-<p>เลือกเดิมพันสัตว์ (สูงสุด 3 ตัว):</p>
-<button class="bet-btn" data-animal="🍈" onclick="toggleBet(this)">🍈 น้ำเต้า</button>
-<button class="bet-btn" data-animal="🦀" onclick="toggleBet(this)">🦀 ปู</button>
-<button class="bet-btn" data-animal="🦞" onclick="toggleBet(this)">🦞 กุ้ง</button>
-<button class="bet-btn" data-animal="🐔" onclick="toggleBet(this)">🐔 ไก่</button>
-<button class="bet-btn" data-animal="🐯" onclick="toggleBet(this)">🐯 เสือ</button>
-<button class="bet-btn" data-animal="🐟" onclick="toggleBet(this)">🐟 ปลา</button>
-</div>
-
-<div class="dice-container">
-<div id="dice1" class="dice">?</div>
-<div id="dice2" class="dice">?</div>
-<div id="dice3" class="dice">?</div>
-</div>
-
-<div>
-<input type="number" id="betAmount" placeholder="จำนวนเงิน" min="1">
-<button onclick="rollDice()" style="padding:10px 20px;font-size:1em;">ทอยลูกเต๋า</button>
-</div>
-
-<div id="result"></div>
-
-<div>
-<button onclick="deposit()">ฝากเงิน</button>
-<button onclick="withdraw()">ถอนเงิน</button>
-</div>
-
-<audio id="winSound" src="https://freesound.org/data/previews/341/341695_62466-lq.mp3"></audio>
-<audio id="loseSound" src="https://freesound.org/data/previews/109/109662_945474-lq.mp3"></audio>
-
-<script>
-let currentPlayer=null;
-let selectedBets=[];
-
-window.onload=function(){
-  const playerID=localStorage.getItem("currentPlayerID");
-  if(!playerID){ alert("กรุณาล็อกอินก่อน"); window.location="login.html"; return; }
-  firebase.database().ref('players/'+playerID).once('value',snap=>{
-    if(snap.exists()){ currentPlayer=snap.val(); updatePlayerDisplay(); }
-    else{ alert("ไม่พบผู้เล่น"); window.location="login.html"; }
-  });
-}
-
-function updatePlayerDisplay(){
-  document.getElementById('playerName').innerText=currentPlayer.name;
-  document.getElementById('playerID').innerText=currentPlayer.id;
-  document.getElementById('playerBalance').innerText=currentPlayer.balance;
-}
-
-function logout(){ localStorage.removeItem("currentPlayerID"); window.location="login.html"; }
-
-function toggleBet(btn){
-  let animal=btn.dataset.animal;
-  if(selectedBets.includes(animal)){
-    selectedBets=selectedBets.filter(a=>a!==animal);
-    btn.classList.remove('selected');
-  }else{
-    if(selectedBets.length>=3){ alert("เลือกได้สูงสุด 3 ตัว"); return; }
-    selectedBets.push(animal);
-    btn.classList.add('selected');
-  }
-}
-
-function deposit(){
-  window.open("https://lin.ee/Mm1caQx","_blank");
-}
-
-function withdraw(){
-  window.open("https://lin.ee/Mm1caQx","_blank");
-}
-
-function rollDice(){
-  if(selectedBets.length===0){ alert("เลือกสัตว์ก่อน"); return; }
-  let amount=parseInt(document.getElementById('betAmount').value);
-  if(isNaN(amount) || amount<=0){ alert("กรอกจำนวนเงินให้ถูกต้อง"); return; }
-  if(amount>currentPlayer.balance){ alert("ยอดเงินไม่พอ"); return; }
-
-  let diceAnimals=["🍈","🦀","🦞","🐔","🐯","🐟"];
-  let results=[diceAnimals[randomLoseWin()],diceAnimals[randomLoseWin()],diceAnimals[randomLoseWin()]];
-
-  document.getElementById('dice1').innerText=results[0];
-  document.getElementById('dice2').innerText=results[1];
-  document.getElementById('dice3').innerText=results[2];
-
-  let winCount=results.filter(r=>selectedBets.includes(r)).length;
-  let winAmount=winCount*amount;
-  currentPlayer.balance+=winAmount-amount; // เสียเงินถ้าไม่ถูก
-
-  firebase.database().ref('players/'+currentPlayer.id+'/balance').set(currentPlayer.balance);
-  updatePlayerDisplay();
-
-  document.getElementById('result').innerText=winCount>0 ? "คุณชนะ "+winAmount+" b!" : "คุณแพ้ "+amount+" b!";
-  if(winCount>0){ document.getElementById('winSound').play(); }
-  else{ document.getElementById('loseSound').play(); }
-}
-
-function randomLoseWin(){ return Math.random()<0.3?Math.floor(Math.random()*6):Math.floor(Math.random()*6); }
+  <header>
+    <img src="logo.svg" alt="GoldoraX Logo">
+    <a href="https://lin.ee/Mm1caQx" target="_blank" class="deposit-btn">💰 ฝาก / ถอนผ่าน LINE OA</a>
+  </header>
+  <h1>🎲 เกมน้ำเต้าปูปลา 🎲</h1>
+  <div id="balance">💰 ยอดเงินผู้เล่น: <span id="playerBalance">0</span> บาท</div><br>
+  <p>เลือกสัตว์ได้สูงสุด 3 ตัว แล้วกดหมุน!</p>
+  <div class="animals">
+    <button class="animal-btn" data-animal="น้ำเต้า">🍐</button>
+    <button class="animal-btn" data-animal="ปู">🦀</button>
+    <button class="animal-btn" data-animal="ปลา">🐟</button>
+    <button class="animal-btn" data-animal="เสือ">🐯</button>
+    <button class="animal-btn" data-animal="ไก่">🐔</button>
+    <button class="animal-btn" data-animal="กุ้ง">🦐</button>
+  </div>
+  <button id="roll">หมุนลูกเต๋า</button>
+  <div id="diceArea" class="dice"></div>
+  <div id="result" class="result"></div>
+  <audio id="rollSound" src="https://www.soundjay.com/misc/sounds/dice-roll-1.mp3"></audio>
+  <audio id="winSound" src="https://www.soundjay.com/button/sounds/button-3.mp3"></audio>
+  <script src="firebase-config.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

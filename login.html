@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<title>Login - GoldoraX</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Login - GoldoraX</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-<h1>เข้าสู่ระบบผู้เล่น</h1>
-<form id="loginForm">
-<input type="text" id="username" placeholder="ชื่อผู้เล่น" required>
-<input type="password" id="password" placeholder="รหัสผ่าน" required>
-<button type="submit">เข้าสู่ระบบ</button>
-<p>ยังไม่มีบัญชี? <a href="register.html">สมัครสมาชิก</a></p>
-</form>
-<script src="main.js"></script>
+  <header>
+    <img src="logo.svg" alt="GoldoraX Logo">
+  </header>
+  <h1>เข้าสู่ระบบผู้เล่น</h1>
+  <form id="loginForm">
+    <input type="text" id="username" placeholder="ชื่อผู้เล่น" required>
+    <input type="password" id="password" placeholder="รหัสผ่าน" required>
+    <button type="submit">เข้าสู่ระบบ</button>
+    <p>ยังไม่มีบัญชี? <a href="register.html">สมัครสมาชิก</a></p>
+  </form>
+  <script src="firebase-config.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>
