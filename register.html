@@ -1,30 +1,33 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Gxtrade — สมัครสมาชิก</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GoldoraX Register</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="firebase-config.js"></script>
 </head>
 <body>
-  <header class="topbar">
-    <div class="logo"><span class="gold">Gx</span>trade</div>
-    <nav><a href="index.html">เข้าสู่ระบบ</a> · <a href="register.html">สมัครสมาชิก</a></nav>
-  </header>
+<h1>สมัครสมาชิก GoldoraX</h1>
+<div class="container">
+<input type="text" id="regName" placeholder="ชื่อผู้เล่น"><br>
+<button onclick="register()">สมัครสมาชิก</button>
+<p><a href="login.html">กลับไปล็อกอิน</a></p>
+</div>
 
-  <main class="card center">
-    <h1>สมัครสมาชิก</h1>
-    <label>ชื่อผู้ใช้ (username):</label>
-    <input id="reg-username" placeholder="พิมพ์ Username" />
-    <label>รหัสผ่าน:</label>
-    <input id="reg-password" type="password" placeholder="พิมพ์ Password" />
-    <button id="regBtn">สมัครสมาชิก</button>
-    <p class="muted"><a href="index.html">กลับไปหน้าเข้าสู่ระบบ</a></p>
-  </main>
-
-  <script src="main.js"></script>
-  <script>
-    document.getElementById('regBtn').addEventListener('click', registerUser);
-  </script>
+<script>
+function register(){
+  let name=document.getElementById('regName').value.trim();
+  if(!name){ alert("กรอกชื่อผู้เล่น"); return; }
+  const id=Date.now();
+  const player={id:id,name:name,balance:0};
+  firebase.database().ref('players/'+id).set(player).then(()=>{
+    alert("สมัครสำเร็จ ID: "+id);
+    window.location="login.html";
+  });
+}
+</script>
 </body>
 </html>

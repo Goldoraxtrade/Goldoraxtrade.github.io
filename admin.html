@@ -1,40 +1,35 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Gxtrade — แอดมิน</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GoldoraX Admin</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="firebase-config.js"></script>
 </head>
 <body>
-  <header class="topbar">
-    <div class="logo"><span class="gold">Gx</span>trade</div>
-    <nav><a href="index.html">หน้าเข้าสู่ระบบ</a></nav>
-  </header>
+<h1>Admin Panel - GoldoraX</h1>
+<div class="container">
+<table border="1" width="100%" id="playersTable">
+<tr><th>ID</th><th>ชื่อผู้เล่น</th><th>ยอดเงิน</th></tr>
+</table>
+<button onclick="window.location='login.html'">ออกจากระบบ</button>
+</div>
 
-  <main class="card admin">
-    <h1>Admin Panel</h1>
-    <p>ล็อกอินด้วย Admin / Adminyai774570</p>
-    <div id="players-list"></div>
-
-    <hr />
-    <h3>ปรับยอดเงิน (balance) ของผู้เล่น</h3>
-    <label>ใส่ ID หรือ Username:</label>
-    <input id="admin-target" placeholder="19000 หรือ username" />
-    <label>จำนวน (ใส่ค่าบวกหรือลบ):</label>
-    <input id="admin-amount" type="number" value="0" />
-    <button onclick="adminAdjust()">ปรับยอด</button>
-    <p class="muted">การปรับยอดนี้จำลองการที่แอดมินจะเพิ่ม/ลด balance หลังผู้เล่นฝาก/ถอนจริงผ่าน LINE OA</p>
-  </main>
-
-  <script src="main.js"></script>
-  <script>
-    // admin auth check
-    window.addEventListener('DOMContentLoaded', function(){
-      if(!isLoggedIn()) { window.location.href = 'index.html'; return; }
-      if(getCurrentUser() !== 'Admin') { alert('ไม่ได้รับสิทธิ์'); window.location.href = 'index.html'; return; }
-      renderPlayers();
-    });
-  </script>
+<script>
+firebase.database().ref('players').on('value',snap=>{
+  let table=document.getElementById('playersTable');
+  table.innerHTML="<tr><th>ID</th><th>ชื่อผู้เล่น</th><th>ยอดเงิน</th></tr>";
+  snap.forEach(child=>{
+    let p=child.val();
+    let row=table.insertRow();
+    row.insertCell(0).innerText=p.id;
+    row.insertCell(1).innerText=p.name;
+    row.insertCell(2).innerText=p.balance;
+  });
+});
+</script>
 </body>
 </html>

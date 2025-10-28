@@ -1,1 +1,60 @@
-body{font-family:sans-serif;}
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin:0;
+  padding:0;
+  background: linear-gradient(135deg,#f6d365,#fda085);
+  text-align:center;
+  color:#333;
+}
+h1,h2 { text-shadow: 2px 2px #fff; }
+.container { max-width: 500px; margin:auto; padding:10px; }
+button {
+  cursor:pointer;
+  border:none;
+  border-radius:10px;
+  padding:10px 20px;
+  margin:5px;
+  transition: 0.3s;
+}
+button:hover { transform: translateY(-3px) scale(1.05); }
+input { padding:10px; margin:5px; border-radius:5px; border:1px solid #ccc; width:80%; }
+
+.bet-btn {
+  font-size:2em;
+  padding:15px 25px;
+  margin:5px;
+  border-radius:15px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  background:#fff;
+  box-shadow:2px 5px 15px rgba(0,0,0,0.3);
+}
+.bet-btn.selected {
+  animation: glow 1s infinite alternate;
+  transform: translateY(-5px) scale(1.2);
+}
+@keyframes glow {
+  0% { box-shadow: 0 0 10px yellow; }
+  50% { box-shadow: 0 0 20px orange, 0 0 30px yellow; }
+  100% { box-shadow: 0 0 10px yellow; }
+}
+
+.dice-container {
+  display:flex;
+  justify-content:center;
+  margin:20px 0;
+  font-size:4em;
+}
+.dice {
+  width:100px;
+  height:100px;
+  line-height:100px;
+  margin:0 10px;
+  border-radius:15px;
+  background:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  box-shadow:2px 5px 15px rgba(0,0,0,0.3);
+  transition:transform 0.3s;
+  font-size:2em;
+}
