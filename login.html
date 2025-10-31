@@ -1,23 +1,81 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <title>Login - GoldoraX</title>
-  <link rel="stylesheet" href="style.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>เข้าสู่ระบบ | GoldoraX</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Prompt', sans-serif;
+    background: linear-gradient(to bottom, #080032, #1a0066);
+    color: white;
+    text-align: center;
+  }
+  .container {
+    margin-top: 100px;
+    padding: 0 10px;
+  }
+  h1 {
+    font-size: 32px;
+    background: linear-gradient(90deg, gold, white);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  input {
+    width: 45%;
+    max-width: 300px;
+    min-width: 200px;
+    padding: 10px;
+    margin: 10px auto;
+    display: block;
+    border-radius: 25px;
+    border: 2px solid gold;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 16px;
+    text-align: center;
+  }
+  button {
+    margin-top: 20px;
+    background: gold;
+    border: none;
+    padding: 12px 30px;
+    font-size: 18px;
+    border-radius: 30px;
+    font-weight: bold;
+    color: #1a0033;
+    cursor: pointer;
+  }
+  button:hover {
+    box-shadow: 0 0 15px gold;
+  }
+  a {
+    color: gold;
+    text-decoration: none;
+  }
+  @media screen and (max-width: 500px) {
+    input {
+      width: 80%;
+    }
+    button {
+      width: 60%;
+      padding: 12px 0;
+    }
+  }
+</style>
 </head>
 <body>
-  <header>
-    <img src="logo.svg" alt="GoldoraX Logo">
-  </header>
-  <h1>เข้าสู่ระบบผู้เล่น</h1>
-  <form id="loginForm">
-    <input type="text" id="username" placeholder="ชื่อผู้เล่น" required>
-    <input type="password" id="password" placeholder="รหัสผ่าน" required>
-    <button type="submit">เข้าสู่ระบบ</button>
-    <p>ยังไม่มีบัญชี? <a href="register.html">สมัครสมาชิก</a></p>
-  </form>
-  <script src="firebase-config.js"></script>
-  <script src="main.js"></script>
+
+<div class="container">
+  <h1>เข้าสู่ระบบ</h1>
+  <input type="text" placeholder="ชื่อผู้ใช้">
+  <input type="password" placeholder="รหัสผ่าน">
+  <button>เข้าสู่ระบบ</button>
+  <p>ยังไม่มีบัญชี? <a href="register.html">สมัครสมาชิก</a></p>
+  <p><a href="index.html">กลับหน้าหลัก</a></p>
+</div>
+
 </body>
 </html>
+
